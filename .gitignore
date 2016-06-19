@@ -1,0 +1,10 @@
+## ignore everything
+*
+
+## unignore
+!\.emacs
+!\.Rprofile
+!\.taglines
+!\.gitconfig
+!\.signature
+!\.gitignore
