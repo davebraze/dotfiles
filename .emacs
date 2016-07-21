@@ -71,7 +71,7 @@
 (require 'uniquify)		  ; ensure unique mode lines
 (require 'hl-line)                ; highlight the current line
 (require 'package)
-;; (package-initialize)              ; this causes a weird warning on startup. Do I need it?
+(package-initialize)              ; this causes a weird warning on startup. Do I need it?
 (add-to-list 'package-archives
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
@@ -211,7 +211,8 @@
 
 ;;;; elpy seems broken, sort it out
 ;;;; elpy mode, for python ;;;
-;; (elpy-enable) ; something strange going on here in combination with (package-initialize)
+(elpy-enable) ; something strange going on here in combination with (package-initialize)
+
 (defun python-shell-send-line ()
   "Select the current line and send to Python. Advance to next line."
   (interactive)
@@ -223,7 +224,7 @@
 (add-hook 'python-mode-hook		; For Python script
           #'(lambda()
 	     (local-set-key (kbd "<C-return>") 'python-shell-send-line)
-	     (local-set-key (vector '(control c) r) 'python-shell-send-region)
+;	     (local-set-key (vector '(control c) r) 'python-shell-send-region)
 	     ))
 
 ;;;; emacs-lisp-mode ;;;
@@ -417,7 +418,6 @@
      ("gnu" . "http://elpa.gnu.org/packages/")
      ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
  '(python-shell-buffer-name "Python")
- '(python-shell-exec-path (quote ("C:/PROGRA~2/WINPYT~1.3/PYTHON~1.5")))
  '(python-shell-interpreter "python")
  '(recentf-max-menu-items 20)
  '(safe-local-variable-values

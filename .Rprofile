@@ -12,6 +12,7 @@
         devtools.name = "Dave Braze",
         devtools.desc.author = "Dave Braze <davebraze@gmail.com> [aut, cre]",
         devtools.desc.license = "MIT + file")
+    .libPaths(.Library)  # maybe better to set value of env. var. R_LIBS_USER
     set.seed(1234)
     q <- function(save='no', ...) {
         quit(save=save, ...)
