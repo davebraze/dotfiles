@@ -5,7 +5,7 @@
         prompt = "R> ",
         width = 100,
         digits = 5,
-        max.print = 100,
+        max.print = 1000,
         show.signif.stars = FALSE,
         repos = c(CRAN = "http://cran.rstudio.com/"),
         browserNLdisabled = TRUE,

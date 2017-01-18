@@ -191,6 +191,8 @@
 (setq delimit-columns-format 'separator)
 (setq delimit-columns-extra t)
 
+;;;; projectile ;;;;
+(projectile-mode)
 
 ;;;; dired ;;;
 (add-hook 'dired-load-hook
@@ -224,7 +226,6 @@
 (add-hook 'python-mode-hook		; For Python script
           #'(lambda()
 	     (local-set-key (kbd "<C-return>") 'python-shell-send-line)
-;	     (local-set-key (vector '(control c) r) 'python-shell-send-region)
 	     ))
 
 ;;;; emacs-lisp-mode ;;;
@@ -355,10 +356,10 @@
 (global-set-key (vector '(meta s)) 'nonincremental-repeat-search-forward)
 (global-set-key (vector '(meta c)) 'center-line)
 (global-set-key (vector '(meta f)) 'fill-paragraph)
-(global-set-key (vector '(meta down)) 'enlarge-window)
-(global-set-key (vector '(meta up)) 'shrink-window)
-(global-set-key (vector '(meta left)) 'enlarge-window-horizontally)
-(global-set-key (vector '(meta right)) 'shrink-window-horizontally)
+(global-set-key (vector '(meta up)) 'enlarge-window)
+(global-set-key (vector '(meta down)) 'shrink-window)
+(global-set-key (vector '(meta right)) 'enlarge-window-horizontally)
+(global-set-key (vector '(meta left)) 'shrink-window-horizontally)
 
 ;; ctl-x-map ;;
 (global-set-key (vector '(control x) ?l) 'recenter)	; current line to screen center
@@ -394,6 +395,9 @@
  '(display-time-mode t)
  '(ediff-merge-split-window-function (quote split-window-vertically))
  '(ediff-split-window-function (quote split-window-vertically))
+ '(elpy-modules
+   (quote
+    (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
  '(ess-ask-for-ess-directory nil)
  '(ess-bugs-batch-method (quote dos))
  '(ess-describe-at-point-method (quote tooltip))
@@ -409,14 +413,19 @@
  '(ess-tab-always-indent nil)
  '(ess-use-eldoc (quote script-only))
  '(ess-user-full-name "Dave Braze")
+ '(explicit-shell-file-name nil)
  '(font-lock-verbose nil)
  '(initial-buffer-choice t)
  '(initial-scratch-message nil)
+ '(org-support-shift-select t)
  '(package-archives
    (quote
     (("melpa" . "http://melpa.milkbox.net/packages/")
      ("gnu" . "http://elpa.gnu.org/packages/")
      ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
+ '(package-selected-packages
+   (quote
+    (ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
  '(python-shell-buffer-name "Python")
  '(python-shell-interpreter "python")
  '(recentf-max-menu-items 20)
