@@ -1,19 +1,20 @@
 .First <- function() {
     options(
+        warn=1,
         stringsAsFactors=FALSE,
         scipen = 10,
         prompt = "R> ",
         width = 100,
         digits = 5,
-        max.print = 1000,
+        max.print = 500,
         show.signif.stars = FALSE,
-        repos = c(CRAN = "http://cran.rstudio.com/"),
         browserNLdisabled = TRUE,
         deparse.max.lines = 4,
         devtools.name = "Dave Braze",
         devtools.desc.author = "Dave Braze <davebraze@gmail.com> [aut, cre]",
         devtools.desc.license = "MIT + file")
-    .libPaths(.Library)  # maybe better to set value of env. var. R_LIBS_USER
+    .libPaths(c(.Library, "c:/users/Dave Braze/R/win-library/3.5"))  # maybe better to set value of env. var. R_LIBS_USER
+###    .libPaths(c(.Library, Sys.getenv("R_LIBS_USER")))  # This doesn't work
     set.seed(1234)
 
     utils::timestamp() # add timestamp to history file
@@ -28,7 +29,7 @@
 }
 
 
-## Define some convenience functions
+## convenience functions
 q <- function(save='no', ...) { # Do not save workspace by default
     quit(save=save, ...)
 }

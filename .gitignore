@@ -1,10 +1,12 @@
 ## ignore everything
 *
 
-## unignore
+## unignore a few things
 !\.emacs
-!\.Rprofile
-!\.taglines
 !\.gitconfig
-!\.signature
 !\.gitignore
+!\.ispell
+!\.Renviron
+!\.Rprofile
+!\.signature
+!\.taglines

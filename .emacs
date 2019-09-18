@@ -56,10 +56,14 @@
   (interactive)
   (insert (format-time-string "%B %d, %Y")))
 
+
+;; coding system stuff
 ;; (prefer-coding-system 'utf-8-with-signature-dos)
 ;; (setq coding-system-for-read 'utf-8-with-signature-dos)
 ;; (setq coding-system-for-write 'utf-8-with-signature-dos)
 ; also consider (setq-default buffer-file-coding-system 'utf-8-with-signature-dos)
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
 
 ;; keep recent file list across sessions
 (require 'recentf)
@@ -90,18 +94,37 @@
 	    (concat " %b")))
 (setq-default icon-title-format "%b")	; set icon title to buffer name
 
-; geometry
-(setq initial-frame-alist '((top . 1) (left . 70)))
+
+;; geometry
+;;
+;; for initial values, position window as desired and then run these functions (c-x c-e)
+;; (frame-position) ;; pixels
+;; (frame-text-height) ;; in pixels
+;; (frame-text-width)
+;; (frame-height) ;; in characters
+;; (frame-width)
+
+;; figure out how to set frame width/height as a proportion of screen size
+;; (ffloor (* (display-pixel-width) .40))
+;; (- (display-pixel-height) 65)
+(setq initial-frame-alist
+      '((top . 0)
+	(left . 100)
+	;; (height . (text-pixels . (- (display-pixel-height) 65)))
+	;; (width . (text-pixels . (ffloor (* (display-pixel-width) .40))))))
+	(height . (text-pixels . 1375))
+	(width . (text-pixels . 1024))))
+
 (setq default-frame-alist
-      '((top . 10) (left . 70)
- 	(width . 100) (height . 55)
+      '((top . 20)
+	(left . 162)
+ 	(width . 100)
+	(height . 55)
  	(cursor-color . "blue")
  	(cursor-type . box)
  	(foreground-color . "black")
  	(background-color . "ivory")
-	(font . "-outline-Consolas-normal-normal-normal-mono-*-*-*-*-c-*-iso8859-1")
-	))
-
+	(font . "-outline-Consolas-normal-normal-normal-mono-*-*-*-*-c-*-iso8859-1")))
 
 ;; more face settings
 (copy-face 'highlight 'my-hl-line)
@@ -151,12 +174,16 @@
 (setq ispell-personal-dictionary "~/.ispell")
 (require 'ispell)
 
+;;;; org mode extensions
 ;;;; ox-pandoc
 ;; install pandoc: http://pandoc.org/installing.html
 ;; Windows installer gives no choice about where to locate pandoc: C:\Users\Dave\AppData\Local\Pandoc\pandoc.exe
-;; (require 'ox-pandoc)
-;; fails to load with error "File error: Cannot open load file, no such file or directory, ox-pandoc"
-;; still need to play with configuration and figure out how to use it.
+(require 'ox-html5slide) ;; export to html5 slide
+(require 'ox-ioslide)    ;; export to Google I/O html5 slide
+(require 'ox-pandoc)     ;; org exporter for pandoc
+(require 'ox-reveal)     ;; reveal.js slideshow exporter
+(require 'ox-tufte)      ;; Tufte html exporter
+
 
 
 ;;;; arc-mode ;;;
@@ -213,8 +240,9 @@
 
 ;;;; elpy seems broken, sort it out
 ;;;; elpy mode, for python ;;;
+(setq python-shell-prompt-detect-failure-warning nil)
+(setq python-shell-completion-native-enable nil)
 (elpy-enable) ; something strange going on here in combination with (package-initialize)
-
 (defun python-shell-send-line ()
   "Select the current line and send to Python. Advance to next line."
   (interactive)
@@ -228,6 +256,7 @@
 	     (local-set-key (kbd "<C-return>") 'python-shell-send-line)
 	     ))
 
+
 ;;;; emacs-lisp-mode ;;;
 (add-hook 'emacs-lisp-mode-hook
 	  #'(lambda ()
@@ -237,10 +266,10 @@
 	      (message "emacs-lisp-mode-hook done")))
 
 ;;;; ESS-mode ;;;
-(setq ess-use-eldoc                 'script-only
-      inferior-ess-own-frame        nil
-      inferior-ess-same-window      nil
-      ess-help-own-frame            'one)          ; all ess help goes to same dedicated frame
+(setq ess-use-eldoc                  'script-only
+      inferior-ess-own-frame         nil
+      inferior-ess-same-window       nil
+      ess-help-own-frame             'one)          ; all ess help goes to same dedicated frame
 
 (add-hook 'ess-mode-hook
           #'(lambda ()
@@ -248,9 +277,11 @@
 			     'nonincremental-repeat-search-forward)
               (local-set-key (vector '(control ?:)) 'comment-dwim)
               (font-lock-mode t)
-              (setq truncate-lines t
-                    fill-column    100
-                    comment-column 40)
+	      (electric-pair-local-mode)
+              (setq truncate-lines                 t
+		    ess-nuke-trailing-whitespace-p nil            ; leaving trailing whitespace alone. Important for Rmarkdown files.
+                    fill-column                    100
+                    comment-column                 40)
               (message "ess-mode-hook done")))
 
 ;;;; font-lock ;;;
@@ -391,7 +422,6 @@
  '(auto-image-file-mode t)
  '(case-fold-search t)
  '(column-number-mode t)
- '(current-language-environment "Windows-1255")
  '(display-time-mode t)
  '(ediff-merge-split-window-function (quote split-window-vertically))
  '(ediff-split-window-function (quote split-window-vertically))
@@ -410,11 +440,13 @@
  '(ess-roxy-tags-param
    (quote
     ("author" "aliases" "concept" "description" "details" "examples" "format" "keywords" "method" "exportMethod" "name" "note" "param" "include" "references" "return" "seealso" "source" "docType" "title" "TODO" "usage" "import" "exportClass" "exportPattern" "S3method" "inheritParams" "importFrom" "importClassesFrom" "importMethodsFrom" "useDynLib" "rdname" "section" "slot")))
+ '(ess-swv-processor (quote knitr))
  '(ess-tab-always-indent nil)
  '(ess-use-eldoc (quote script-only))
  '(ess-user-full-name "Dave Braze")
  '(explicit-shell-file-name nil)
  '(font-lock-verbose nil)
+ '(inferior-ess-r-program "C:/Program Files/R/R-3.5.1/bin/x64/Rterm.exe")
  '(initial-buffer-choice t)
  '(initial-scratch-message nil)
  '(org-support-shift-select t)
@@ -425,9 +457,10 @@
      ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
  '(package-selected-packages
    (quote
-    (ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
+    (highlight-chars dired+ dired-quick-sort flx-ido ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
  '(python-shell-buffer-name "Python")
  '(python-shell-interpreter "python")
+ '(recentf-auto-cleanup 300)
  '(recentf-max-menu-items 20)
  '(safe-local-variable-values
    (quote
@@ -445,4 +478,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(table-cell ((t (:background "SlateGray1" :foreground "black" :inverse-video nil)))))
+(put 'dired-find-alternate-file 'disabled nil)
+ 
