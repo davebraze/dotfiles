@@ -43,7 +43,6 @@
 (display-time)
 (tool-bar-mode -1)
 
-
 (global-set-key (kbd "C-c t") 'insert-time)
 (defun insert-time ()
   "Insert the current time in 24 hour format"
@@ -145,7 +144,6 @@
 ;; (set-face-attribute 'menu
 ;; 		    nil)
 
-
 ;; (set-face-attribute 'default nil :height 75)
 ;; (set-face-font 'bold-italic "-outline-Consolas-normal-italic-normal-mono-*-75-*-*-c-*-iso8859-1")
 ;; (set-face-font 'italic "-outline-Consolas-bold-italic-normal-mono-*-75-*-*-c-*-iso8859-1")
@@ -183,8 +181,6 @@
 (require 'ox-pandoc)     ;; org exporter for pandoc
 (require 'ox-reveal)     ;; reveal.js slideshow exporter
 (require 'ox-tufte)      ;; Tufte html exporter
-
-
 
 ;;;; arc-mode ;;;
 (setq
@@ -298,40 +294,13 @@
 ;; (setq shell-file-name explicit-shell-file-name)
 (add-to-list 'exec-path "D:/winbin/Git/bin") ;; why don't I just put git on the PATH?
 
-;;;; matlab-mode ;;;
-(autoload 'matlab-mode "matlab" "Enter MATLAB mode." t)
-(autoload 'matlab-shell "matlab" "Interactive MATLAB mode." t)
-(add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
-
-(setq matlab-shell-command-switches (quote ("-nojvm -nosplash"))
-      matlab-shell-echoes           t
-      matlab-shell-input-ring-size  128
-      )
-
-(add-hook 'matlab-mode-hook
-          #'(lambda ()
-              (local-set-key (vector '(meta s))
-			     'nonincremental-repeat-search-forward)
-              (local-set-key (vector '(control ?:)) 'comment-dwim)
-              (font-lock-mode t)
-              (setq truncate-lines t
-                    fill-column    100
-                    comment-column 40)
-              (message "matlab-mode-hook done")))
-
 ;;;; markdown-mode ;;;
+;; need to hook into the local key map for grow-window and
+;; shrink-window to be consistent with global key map.
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-;; ;;;; Use polymode for rmarkdown files ;;;;
-;; (setq load-path
-;;       (append '("c:/users/Dave/.emacs.d/polymode"  "c:/users/Dave/.emacs.d/polymode/modes")
-;;               load-path))
-;; (require 'poly-R)
-;; (require 'poly-markdown)
-;; (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
 ;;;; msb ;;;; mouse buffer menu minor mode
 (msb-mode)
@@ -382,8 +351,9 @@
 (global-set-key (vector '(control f)) 'forward-word)
 (global-set-key (vector '(control z)) 'undo)
 (global-set-key (vector '(control l)) 'goto-line)
+(global-set-key (vector '(control v)) 'yank)
 
-;; esc-map / Alt-keys in NTemacs ;;
+;; esc-map / Alt-keys ;;
 (global-set-key (vector '(meta s)) 'nonincremental-repeat-search-forward)
 (global-set-key (vector '(meta c)) 'center-line)
 (global-set-key (vector '(meta f)) 'fill-paragraph)
@@ -449,6 +419,8 @@
  '(inferior-ess-r-program "C:/Program Files/R/R-3.5.1/bin/x64/Rterm.exe")
  '(initial-buffer-choice t)
  '(initial-scratch-message nil)
+ '(magit-log-section-commit-count 15)
+ '(magit-status-margin (quote (t "%Y-%m-%d" magit-log-margin-width nil 18)))
  '(org-support-shift-select t)
  '(package-archives
    (quote
@@ -480,4 +452,4 @@
  ;; If there is more than one, they won't work right.
  '(table-cell ((t (:background "SlateGray1" :foreground "black" :inverse-video nil)))))
 (put 'dired-find-alternate-file 'disabled nil)
- 
+
