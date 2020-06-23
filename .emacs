@@ -5,7 +5,6 @@
 ;; possibly set up shortcut like this:
 ;; "C:\Program Files (x86)\GNU Emacs 23.1\bin\emacsclientw.exe" -na runemacs.exe -c
 
-;; Install new packages by calling "M-x package-list-packages"
 ;; The package manager installs packages to directories under "~/.emacs.d/elpa/"
 ;; and adds the new package directory to load-path.
 
@@ -18,7 +17,6 @@
       inhibit-default-init           nil
       insert-default-directory       nil
       default-major-mode             'indented-text-mode
-      fill-column                    100
       search-exit-option             nil	  ; require ESC to end an incremental search
       search-highlight               t
       scroll-step                    '1
@@ -26,8 +24,9 @@
       uniquify-buffer-name-style     'post-forward
       line-number-display-limit      nil
       compilation-scroll-output      t		  ; force compilation window to scroll automatically
-      truncate-partial-width-windows t            ; don't wrap lines
-      truncate-lines                 t            ;
+      fill-column                    100
+      ;; truncate-partial-width-windows t            ; don't wrap lines
+      ;; truncate-lines                 t            ;
       gnuserv-frame (selected-frame)		  ; open files in existing frame
       next-line-add-newlines         nil	  ; don't add newlines if cursor goes past last line
       column-number-mode             t		  ; show column numbers
@@ -92,32 +91,31 @@
 	    (concat " %b")))
 (setq-default icon-title-format "%b")	; set icon title to buffer name
 
-
 ;; geometry
 ;;
 ;; for initial values, position window as desired and then run these functions (c-x c-e)
-;; (frame-position) ;; pixels
-;; (frame-text-height) ;; in pixels
-;; (frame-text-width)
-;; (frame-height) ;; in characters
-;; (frame-width)
+(frame-position) ;; pixels
+(frame-text-height) ;; in pixels
+(frame-text-width)
+(frame-height) ;; in characters
+(frame-width)
 
 ;; figure out how to set frame width/height as a proportion of screen size
 ;; (ffloor (* (display-pixel-width) .40))
 ;; (- (display-pixel-height) 65)
 (setq initial-frame-alist
       '((top . 0)
-	(left . 100)
+	(left . 81)
 	;; (height . (text-pixels . (- (display-pixel-height) 65)))
 	;; (width . (text-pixels . (ffloor (* (display-pixel-width) .40))))))
-	(height . (text-pixels . 1375))
-	(width . (text-pixels . 1024))))
+	(height . (text-pixels . 1376))
+	(width . (text-pixels . 1100))))
 
 (setq default-frame-alist
-      '((top . 20)
-	(left . 162)
+      '((top . 0)
+	(left . 81)
  	(width . 100)
-	(height . 55)
+	(height . 40)
  	(cursor-color . "blue")
  	(cursor-type . box)
  	(foreground-color . "black")
@@ -244,7 +242,7 @@
  	  #'(lambda ()
  	      (require 'dired-x)
  	      (setq dired-x-hands-off-my-keys t)
-;;	      (require 'dired+)
+	      (require 'dired+)
 ;; 	      (require 'dired-a)
  	      (message "dired-load-hook done")))
 
@@ -452,6 +450,7 @@
     ((lambda nil
        (message "dired-mode-hook done"))
      diredp-nb-marked-in-mode-name diredp--set-up-font-locking dired-extra-startup)))
+ '(diredp-hide-details-initially-flag nil)
  '(display-time-mode t)
  '(ediff-merge-split-window-function (quote split-window-vertically))
  '(ediff-split-window-function (quote split-window-vertically))
@@ -505,13 +504,16 @@
    (quote
     ((whitespace-style face tabs spaces trailing lines space-before-tab::space newline indentation::space empty space-after-tab::space space-mark tab-mark newline-mark))))
  '(save-place t nil (saveplace))
+ '(sentence-end-double-space nil)
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(sql-mysql-program "C:/Program Files/MySQL/MySQL Server 5.5/bin/mysql")
  '(sql-password "")
  '(sql-product (quote mysql))
  '(sql-user "")
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(truncate-partial-width-windows nil)
+ '(word-wrap nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
