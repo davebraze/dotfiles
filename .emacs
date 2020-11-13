@@ -72,6 +72,7 @@
 (require 'uniquify)		  ; ensure unique mode lines
 (require 'hl-line)                ; highlight the current line
 (require 'package)
+
 (package-initialize)              ; this causes a weird warning on startup. Do I need it?
 (add-to-list 'package-archives
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
@@ -105,7 +106,7 @@
 ;; (- (display-pixel-height) 65)
 (setq initial-frame-alist
       '((top . 0)
-	(left . 81)
+	(left . 101)
 	;; (height . (text-pixels . (- (display-pixel-height) 65)))
 	;; (width . (text-pixels . (ffloor (* (display-pixel-width) .40))))))
 	(height . (text-pixels . 1376))
@@ -288,6 +289,24 @@
       inferior-ess-same-window       nil
       ess-help-own-frame             'one)          ; all ess help goes to same dedicated frame
 
+(setq ess-ask-for-ess-directory      nil
+      ess-r-versions                 (quote  ("R-1" "R-2" "R-3" "R-4" "R-devel" "R-patched"))
+      ess-bugs-batch-method          (quote dos)
+      ess-describe-at-point-method   (quote tooltip)
+      ess-developer-packages         (quote ("FDBeye" "FDB1" "FDButils"))
+      ess-directory-containing-R     "C:/Program Files/"
+      inferior-ess-r-program         "c:/Program Files/R/R-4.0.3/bin/x64/rterm.exe"
+      ess-eval-visibly               t
+      ess-funcmenu-use-p             t
+      ess-help-own-frame             (quote one)
+      ess-history-file               nil
+      ess-keep-dump-files            "always"
+      ess-roxy-tags-param           (quote ("author" "aliases" "concept" "description" "details" "examples" "format" "keywords" "method" "exportMethod" "name" "note" "param" "include" "references" "return" "seealso" "source" "docType" "title" "TODO" "usage" "import" "exportClass" "exportPattern" "S3method" "inheritParams" "importFrom" "importClassesFrom" "importMethodsFrom" "useDynLib" "rdname" "section" "slot"))
+      ess-swv-processor             (quote knitr)
+      ess-tab-always-indent         nil
+      ess-use-eldoc                 (quote script-only)
+      ess-user-full-name            "Dave Braze")
+
 (add-hook 'ess-mode-hook
           #'(lambda ()
               (local-set-key (vector '(meta s))
@@ -300,6 +319,11 @@
                     fill-column                    100
                     comment-column                 40)
               (message "ess-mode-hook done")))
+
+;; If using the Goulet Emacs for Windows distro, be sure to edit 
+;; site-start.el and comment out the line "(require 'ess-site)". 
+;; The file is located somewhere like c:/Program Files/GNU Emacs 26.2/share/emacs/site-lisp
+(require 'ess-site)
 
 ;;;; font-lock ;;;
 (add-hook 'font-lock-mode-hook
@@ -457,22 +481,6 @@
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))
- '(ess-ask-for-ess-directory nil)
- '(ess-bugs-batch-method (quote dos))
- '(ess-describe-at-point-method (quote tooltip))
- '(ess-developer-packages (quote ("FDBeye" "FDB1" "FDButils")))
- '(ess-eval-visibly t)
- '(ess-funcmenu-use-p t)
- '(ess-help-own-frame (quote one))
- '(ess-history-file nil)
- '(ess-keep-dump-files "always")
- '(ess-roxy-tags-param
-   (quote
-    ("author" "aliases" "concept" "description" "details" "examples" "format" "keywords" "method" "exportMethod" "name" "note" "param" "include" "references" "return" "seealso" "source" "docType" "title" "TODO" "usage" "import" "exportClass" "exportPattern" "S3method" "inheritParams" "importFrom" "importClassesFrom" "importMethodsFrom" "useDynLib" "rdname" "section" "slot")))
- '(ess-swv-processor (quote knitr))
- '(ess-tab-always-indent nil)
- '(ess-use-eldoc (quote script-only))
- '(ess-user-full-name "Dave Braze")
  '(explicit-shell-file-name nil)
  '(face-font-family-alternatives
    (quote
@@ -482,7 +490,6 @@
      ("Sans Serif" "helv" "helvetica" "arial" "fixed")
      ("helv" "helvetica" "arial" "fixed"))))
  '(font-lock-verbose nil)
- '(inferior-ess-r-program "C:/Program Files/R/R-3.6.1/bin/x64/Rterm.exe")
  '(initial-buffer-choice t)
  '(initial-scratch-message nil)
  '(magit-log-section-commit-count 15)
@@ -490,12 +497,11 @@
  '(org-support-shift-select t)
  '(package-archives
    (quote
-    (("melpa" . "http://melpa.milkbox.net/packages/")
-     ("gnu" . "http://elpa.gnu.org/packages/")
+    (("gnu" . "http://elpa.gnu.org/packages/")
      ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
  '(package-selected-packages
    (quote
-    (el-get w32-browser poly-R poly-ansible poly-erb poly-markdown poly-noweb poly-org poly-rst poly-ruby poly-slim poly-wdl polymode highlight-chars dired+ dired-quick-sort flx-ido ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
+    (zones company git-commit helm-core ht hydra lv transient with-editor el-get w32-browser poly-R poly-ansible poly-erb poly-markdown poly-noweb poly-org poly-rst poly-ruby poly-slim poly-wdl polymode highlight-chars dired+ dired-quick-sort flx-ido ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
  '(python-shell-buffer-name "Python")
  '(python-shell-interpreter "python")
  '(recentf-auto-cleanup 300)
