@@ -24,7 +24,7 @@
       uniquify-buffer-name-style     'post-forward
       line-number-display-limit      nil
       compilation-scroll-output      t		  ; force compilation window to scroll automatically
-      fill-column                    100
+      fill-column                    5000
       ;; truncate-partial-width-windows t            ; don't wrap lines
       ;; truncate-lines                 t            ;
       gnuserv-frame (selected-frame)		  ; open files in existing frame
@@ -215,7 +215,6 @@
 
 ;;;; projectile ;;;;
 (projectile-mode)
-
 
 ;;;; dired+ by way of el-get
 ;; Mostly I use the emacs lisp package manager (elpy) for, well, managing packages.
@@ -502,6 +501,9 @@
  '(package-selected-packages
    (quote
     (zones company git-commit helm-core ht hydra lv transient with-editor el-get w32-browser poly-R poly-ansible poly-erb poly-markdown poly-noweb poly-org poly-rst poly-ruby poly-slim poly-wdl polymode highlight-chars dired+ dired-quick-sort flx-ido ox-reveal ox-html5slide ox-ioslide ox-pandoc ox-tufte projectile magit lorem-ipsum helm elpy ego csv-mode)))
+ '(projectile-indexing-method (quote alien))
+ '(projectile-mode t nil (projectile))
+ '(projectile-use-git-grep t)
  '(python-shell-buffer-name "Python")
  '(python-shell-interpreter "python")
  '(recentf-auto-cleanup 300)
